@@ -39,7 +39,7 @@ Per 2 CFR 200.453(c), computing devices can be charged as direct costs if they a
 
 2. **Project-specific computers ARE allowable** - A computer purchased specifically for a postdoc or graduate student to accomplish project work IS allowable.
 
-**Good example**: "Workstation for postdoc to perform gravitational wave data analysis - $4,500"
+**Good example**: "Workstation for postdoc to perform computational modeling and data analysis - $4,500"
 
 **Bad example**: "Laptop for PI - $2,000" (likely used for teaching/service too)
 

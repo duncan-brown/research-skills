@@ -223,7 +223,8 @@ def apply_escalation(base_amount, years, rate=0.03):
 # === NIH Salary Cap Functions ===
 
 NIH_SALARY_CAPS = {
-    ('2025-01-01', '2025-09-30'): 225700,
+    ('2026-01-01', '2026-12-31'): 228000,
+    ('2025-01-01', '2025-12-31'): 225700,
     ('2024-10-01', '2024-12-31'): 221900,
     ('2024-01-01', '2024-09-30'): 221900,
     ('2023-10-01', '2023-12-31'): 212100,
@@ -245,7 +246,7 @@ def get_nih_salary_cap(date=None):
             return cap
     
     # Default to most recent known cap
-    return 225700
+    return 228000
 
 
 def calculate_nih_capped_salary(actual_salary, months, date=None, is_calendar_year=False):

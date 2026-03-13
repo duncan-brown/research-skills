@@ -18,11 +18,12 @@ description: Syracuse University OSP Budget Template population for sponsored re
 
 | Field | Value |
 |-------|-------|
-| **Version** | 2.0 |
+| **Version** | 2.1 |
 | **Created** | November 26, 2025 |
-| **Last Updated** | February 9, 2026 |
+| **Last Updated** | March 13, 2026 |
 
 ### Version History
+- **2.1** (Mar 13, 2026): Updated OSP Budget Template to 1/30/2026 version. NIH salary cap updated to $228,000 (effective January 1, 2026, per NOT-OD-26-034). Removed personally identifying information and research-domain-specific references from examples. All example names replaced with generic placeholders.
 - **2.0** (Feb 9, 2026): MAJOR — Self-contained release. Incorporated all rate data, policy references, calculation scripts, and lookup functions from su-research-budget and su-chart-of-accounts. No external skill dependencies (except xlsx). Added rate_lookup.py and budget_calculator.py to scripts/. Added fringe rate data files, F&A rate history, and all policy reference files to skill. Updated all documentation to reference internal files only.
 - **1.3** (Nov 26, 2025): CRITICAL FIX — Added mandatory su-research-budget consultation requirement; removed inline fringe rate values to prevent stale data; added explicit rate lookup workflow; fixed error where faculty summer fringe was assumed rather than looked up, causing ~$7K/year overestimate
 - **1.2** (Nov 26, 2025): Added OSP Budget Template to assets; skill is now self-contained
@@ -32,7 +33,7 @@ description: Syracuse University OSP Budget Template population for sponsored re
 ### Versioning Instructions for Skill Updates
 
 When this skill is updated and rebuilt using the skill-creator:
-1. **Auto-increment the minor version**: 2.0 → 2.1 → 2.2 → 2.3, etc.
+1. **Auto-increment the minor version**: 2.1 → 2.2 → 2.3 → 2.4, etc.
 2. **Update "Last Updated" date** to the current date
 3. **Add entry to Version History** with brief description of changes
 4. **Major version updates** (e.g., 2.x → 3.0) require explicit user instruction
@@ -207,7 +208,7 @@ This skill helps Syracuse University PIs populate the OSP Budget Template (FY26 
 ### Key Policy Rules
 
 1. **NSF Two-Month Rule**: Senior personnel limited to 2 months salary per year (unless PO approves exception). See `references/nsf_policies.md`.
-2. **NIH Salary Cap**: $225,700 (calendar) / ~$159,871 (academic equivalent). See `references/nih_policies.md`.
+2. **NIH Salary Cap**: $228,000 (calendar) / ~$161,500 (academic equivalent). See `references/nih_policies.md`.
 3. **Course Buyout**: 15% of academic year = 1.275 months per course. See `references/salary_policies.md`.
 4. **Summer Limit**: Maximum 3.5 months from ALL sources
 5. **Cost Sharing**: Requires SEPARATE OSP Budget Template workbook
@@ -693,4 +694,4 @@ The following rows contain formulas and must NEVER be written to:
 
 ## Version History
 
-- FY26: Current version, developed November 2025, self-contained release February 2026
+- FY26: Current version, developed November 2025, self-contained release February 2026, template and NIH cap update March 2026

@@ -82,7 +82,7 @@ For consultant budget justification, include:
 - Travel (if separate)
 
 **Example:**
-"Dr. Jane Smith, expert in gravitational wave data analysis, will provide 5 days of technical consultation on LIGO data processing algorithms at $750/day. Dr. Smith's rate is consistent with her consulting fees charged to other academic institutions for comparable services. Total: $3,750."
+"Dr. Jane Smith, expert in computational modeling, will provide 5 days of technical consultation on data processing algorithms at $750/day. Dr. Smith's rate is consistent with her consulting fees charged to other academic institutions for comparable services. Total: $3,750."
 
 ### F&A Treatment
 

@@ -73,7 +73,7 @@ When calculating postdoc or research associate costs:
 
 ### Special Case: NIH Salary Cap
 
-For faculty with salaries above NIH cap (~$225,700):
+For faculty with salaries above NIH cap (~$228,000):
 - Course buy-out based on **9-month equivalent of federal salary cap**
 - NOT based on actual salary
 - Example: If AY salary is $300,000, use capped amount for buy-out calculation

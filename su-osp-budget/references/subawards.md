@@ -182,7 +182,7 @@ For each subaward, the justification (Column T or separate document) should incl
 4. **Why subaward** (vs. consultant or contractor)
 
 **Example:**
-"Subaward to California Institute of Technology (Dr. Jane Smith, PI): $304,711 total costs over 3 years. Caltech will perform gravitational wave data analysis and develop signal processing algorithms. Dr. Smith is a leading expert in matched filtering techniques. See attached Caltech budget and statement of work."
+"Subaward to State University (Dr. Jane Smith, PI): $304,711 total costs over 3 years. State University will perform computational modeling and develop data analysis algorithms. Dr. Smith is a leading expert in the relevant analytical techniques. See attached State University budget and statement of work."
 
 ---
 

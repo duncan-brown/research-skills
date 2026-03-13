@@ -71,7 +71,7 @@ Actual rates in place at the time of expenditure will be charged to the project.
 
 **NIH Salary Cap Cost Sharing:**
 
-"The Principal Investigator's actual salary exceeds the NIH salary cap (currently $225,700 for calendar year 2025). Syracuse University will provide mandatory cost sharing for the salary amount exceeding the cap, plus associated fringe benefits. The cost-shared portion will be charged to institutional funds and is verifiable from University payroll records."
+"The Principal Investigator's actual salary exceeds the NIH salary cap (currently $228,000 for calendar year 2026). Syracuse University will provide mandatory cost sharing for the salary amount exceeding the cap, plus associated fringe benefits. The cost-shared portion will be charged to institutional funds and is verifiable from University payroll records."
 
 ## Modified Total Direct Costs (MTDC) Definition
 

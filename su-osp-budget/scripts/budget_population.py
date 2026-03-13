@@ -332,8 +332,8 @@ class PersonnelChange:
     - Regenerate from state
     - Handle non-linear budget building
     """
-    description: str          # Human-readable: "Alex Nitz graduates after Year 1"
-    person_name: str          # "Alex Nitz" or "TBD"
+    description: str          # Human-readable: "TBD Graduate Student graduates after Year 1"
+    person_name: str          # "Jane Smith" or "TBD"
     row: int                  # Row in the sheet (7-14, 20-34 for senior; 53-72 for other)
     section: str              # "senior" or "other"
     change_type: str          # "remove", "modify", "add"
@@ -600,7 +600,7 @@ def populate_budget(template_path: str, output_path: str, data: BudgetData) -> D
         
         # Check NIH salary cap
         if data.project_info.sponsor_type == SponsorType.FEDERAL_NIH:
-            cap = 225700 if person.cal_months > 0 else 159871
+            cap = 228000 if person.cal_months > 0 else 161500
             if person.base_salary > cap:
                 warnings.append(
                     f"NIH salary cap: {person.first_name} {person.last_name} salary ${person.base_salary:,.0f} "
@@ -928,43 +928,43 @@ if __name__ == "__main__":
         ),
         senior_personnel=[
             SeniorPerson(
-                first_name="Duncan",
-                last_name="Brown",
+                first_name="Jane",
+                last_name="Smith",
                 role=SeniorRole.PI,
                 designation=Designation.TENURE_TRACK_ACAD_SUM,
-                base_salary=100000,
+                base_salary=105000,
                 acad_months=1.275,
                 sum_months=0.725
             ),
             SeniorPerson(
-                first_name="Ruslan",
-                last_name="Podviianiuk",
+                first_name="Robert",
+                last_name="Chen",
                 role=SeniorRole.CO_PI,
                 designation=Designation.NON_TENURE_FULL_TIME,
-                base_salary=80000,
+                base_salary=82000,
                 cal_months=12
             ),
         ],
         grad_fringe_type=SponsorType.FEDERAL_OTHER,
         other_personnel=[
             OtherPerson(
-                first_name="Ian",
-                last_name="Harry",
+                first_name="TBD",
+                last_name="Postdoc",
                 role=OtherRole.POSTDOC,
                 cal_months=6,
-                requested_salary=32500
+                requested_salary=33000
             ),
             OtherPerson(
-                first_name="Prayush",
-                last_name="Kumar",
+                first_name="TBD",
+                last_name="Graduate Student 1",
                 role=OtherRole.GRAD_ASSISTANT,
                 acad_months=9,
                 sum_months=2,
                 requested_salary=35139
             ),
             OtherPerson(
-                first_name="Alex",
-                last_name="Nitz",
+                first_name="TBD",
+                last_name="Graduate Student 2",
                 role=OtherRole.GRAD_ASSISTANT,
                 acad_months=4.5,
                 requested_salary=14375

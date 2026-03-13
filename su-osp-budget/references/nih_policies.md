@@ -6,10 +6,11 @@ Policies and requirements specific to National Institutes of Health awards.
 
 ### Current Cap Levels
 
-**Effective January 1, 2025 - September 30, 2025:** $225,700  
+**Effective January 1, 2026:** $228,000 (per NOT-OD-26-034, effective date corrected by NOT-OD-26-038)  
+**Effective January 1, 2025 - December 31, 2025:** $225,700  
 **Effective October 1, 2024 - December 31, 2024:** $221,900
 
-The cap is tied to **Executive Level II** of the Federal Executive Pay Scale and typically updates twice per year (October 1 and January 1).
+The cap is tied to **Executive Level II** of the Federal Executive Pay Scale and typically updates annually (January 1).
 
 ### Policy Changes (FY2025+)
 
@@ -39,19 +40,19 @@ When faculty salary exceeds the NIH cap:
 **Example: Faculty with $300,000 AY salary, requesting 2 months summer**
 
 1. Calculate actual 2-month salary: $300,000 ÷ 8.5 × 2 = $70,588.24
-2. Calculate capped amount: $225,700 ÷ 12 × 2 = $37,616.67
-3. Cost sharing required: $70,588.24 - $37,616.67 = $32,971.57
+2. Calculate capped amount: $228,000 ÷ 12 × 2 = $38,000.00
+3. Cost sharing required: $70,588.24 - $38,000.00 = $32,588.24
 
 **Charged to NIH:**
-- Salary (capped): $37,616.67
-- Fringe (29.5%): $11,096.92
-- F&A (49.5%): $24,113.22
-- **NIH Total: $72,826.81**
+- Salary (capped): $38,000.00
+- Fringe (29.5%): $11,210.00
+- F&A (49.5%): $24,354.95
+- **NIH Total: $73,564.95**
 
 **Mandatory Cost Share (University pays, typically Fund 11):**
-- Salary (excess): $32,971.57
-- Fringe (37.5% on Fund 11): $12,364.34
-- **Cost Share Total: $45,335.91**
+- Salary (excess): $32,588.24
+- Fringe (37.5% on Fund 11): $12,220.59
+- **Cost Share Total: $44,808.83**
 
 **Key points:**
 - Cost sharing uses higher fringe rate (Fund 11: 37.5%)
