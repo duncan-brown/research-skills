@@ -18,11 +18,12 @@ description: Syracuse University OSP Budget Template population for sponsored re
 
 | Field | Value |
 |-------|-------|
-| **Version** | 2.1 |
+| **Version** | 2.2 |
 | **Created** | November 26, 2025 |
 | **Last Updated** | March 13, 2026 |
 
 ### Version History
+- **2.2** (Mar 13, 2026): Added explicit GitHub repository update instructions to versioning workflow. No functional changes to budget logic.
 - **2.1** (Mar 13, 2026): Updated OSP Budget Template to 1/30/2026 version. NIH salary cap updated to $228,000 (effective January 1, 2026, per NOT-OD-26-034). Removed personally identifying information and research-domain-specific references from examples. All example names replaced with generic placeholders.
 - **2.0** (Feb 9, 2026): MAJOR — Self-contained release. Incorporated all rate data, policy references, calculation scripts, and lookup functions from su-research-budget and su-chart-of-accounts. No external skill dependencies (except xlsx). Added rate_lookup.py and budget_calculator.py to scripts/. Added fringe rate data files, F&A rate history, and all policy reference files to skill. Updated all documentation to reference internal files only.
 - **1.3** (Nov 26, 2025): CRITICAL FIX — Added mandatory su-research-budget consultation requirement; removed inline fringe rate values to prevent stale data; added explicit rate lookup workflow; fixed error where faculty summer fringe was assumed rather than looked up, causing ~$7K/year overestimate
@@ -33,10 +34,62 @@ description: Syracuse University OSP Budget Template population for sponsored re
 ### Versioning Instructions for Skill Updates
 
 When this skill is updated and rebuilt using the skill-creator:
-1. **Auto-increment the minor version**: 2.1 → 2.2 → 2.3 → 2.4, etc.
+1. **Auto-increment the minor version**: 2.2 → 2.3 → 2.4 → 2.5, etc.
 2. **Update "Last Updated" date** to the current date
 3. **Add entry to Version History** with brief description of changes
 4. **Major version updates** (e.g., 2.x → 3.0) require explicit user instruction
+
+### GitHub Repository Update Workflow
+
+This skill is maintained in the `duncan-brown/research-skills` GitHub repository. When a new version is built, the repository must be updated following this procedure:
+
+**Repository structure:**
+```
+research-skills/
+├── README.md
+├── su-osp-budget/           # Source files (git-tracked with full history)
+│   ├── SKILL.md
+│   ├── assets/
+│   ├── references/
+│   └── scripts/
+└── dist/
+    └── su-osp-budget/       # Packaged .skill files by version
+        ├── v2.0/
+        │   └── su-osp-budget.skill
+        ├── v2.1/
+        │   └── su-osp-budget.skill
+        └── v{X.Y}/
+            └── su-osp-budget.skill
+```
+
+**Step 1: Commit source file changes**
+
+Push all modified source files under `su-osp-budget/` to the `main` branch. The commit message should summarize the changes, e.g.:
+```
+v2.3: Brief description of what changed
+```
+
+**Step 2: Package the .skill file**
+
+Use the skill-creator's `package_skill.py` script (or equivalent) to create the `.skill` zip file from the source directory.
+
+**Step 3: Commit the packaged .skill file**
+
+Push the `.skill` file to `dist/su-osp-budget/v{X.Y}/su-osp-budget.skill` with a commit message like:
+```
+added binary package for su-osp-budget.skill v{X.Y}
+```
+
+**Step 4: Tag the release**
+
+Create a lightweight git tag on the source commit (from Step 1, not the dist commit) named:
+```
+su-osp-budget-v{X.Y}
+```
+
+The tag naming convention is `{skill-name}-v{version}` to support multiple skills in the same repository without tag collisions.
+
+**Privacy reminder:** Before committing, verify that no personally identifying information (real names, salaries, or identifying research domain references) has been introduced during development. Run a grep scan across all `.md` and `.py` files.
 
 ---
 
