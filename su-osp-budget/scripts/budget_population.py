@@ -514,6 +514,8 @@ SAFE_CELLS_PERSONNEL_YR1 = {
     *[f'{col}{row}' for row in range(7, 15) for col in ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'P']],
     # Additional senior personnel rows 20-34
     *[f'{col}{row}' for row in range(20, 35) for col in ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'P']],
+    # Other personnel count column (B39-B48) — B49 is formula =SUM(B39:B46)
+    *[f'B{row}' for row in range(39, 49)],
     # Grad fringe type
     'I43',
     # Other personnel detail rows 53-72 (including M for salary)
@@ -652,6 +654,28 @@ def populate_budget(template_path: str, output_path: str, data: BudgetData) -> D
         justification = person.generate_justification()
         if justification:
             safe_write(f'P{row}', justification)
+    
+    # === Other Personnel Counts (Column B, rows 39-48) ===
+    # Count personnel by role and write to the summary count column
+    # B49 is formula =SUM(B39:B46), so only write to B39-B48
+    role_to_count_row = {
+        OtherRole.POSTDOC: 39,
+        OtherRole.RA_FULL_TIME: 40,
+        OtherRole.RA_HOURLY: 41,
+        OtherRole.OTHER_PROF_STAFF: 42,
+        OtherRole.GRAD_ASSISTANT: 43,
+        OtherRole.HOURLY_STUDENT: 44,
+        OtherRole.SECRETARIAL: 45,
+        OtherRole.OTHER_TEMP: 46,
+        OtherRole.EXTRA_SERVICE: 47,
+        OtherRole.ADJUNCT: 48,
+    }
+    role_counts = {}
+    for person in data.other_personnel:
+        role_counts[person.role] = role_counts.get(person.role, 0) + 1
+    for role, count in role_counts.items():
+        if role in role_to_count_row:
+            safe_write(f'B{role_to_count_row[role]}', count)
     
     # Save workbook
     wb.save(output_path)

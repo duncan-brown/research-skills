@@ -213,13 +213,21 @@ def populate_sf424(template_path: str, output_path: str,
     # --- Sheet: Budget 1 A-B ---
     ws_ab = wb['Budget 1 A-B']
 
-    # Header info
+    # Header info — written to Budget 1 A-B ONLY.
+    # The SF424 template auto-copies these to the other budget period sheets.
+    # D2 (merged D2:F2): DUNS number
     ws_ab['D2'] = budget.org_duns
-    ws_ab['A6'] = f'*Name of Organization: {budget.organization_name}'
-    ws_ab['A8'] = f'*Start Date: {budget.start_date}'
-    ws_ab['D8'] = f'*End Date: {budget.end_date}'
+    # D4: "X" for Project budget type (not Subaward/Consortium)
+    ws_ab['D4'] = "X"
+    # D6 (merged D6:H6): Organization name (plain text, no label prefix)
+    ws_ab['D6'] = budget.organization_name
+    # C8: Start date (A8:B8 is the label "*Start Date:")
+    ws_ab['C8'] = budget.start_date
+    # F8: End date (D8:E8 is the label "*End Date:")
+    ws_ab['F8'] = budget.end_date
+    # H8: Budget period number
     ws_ab['H8'] = budget.budget_period
-    cells_written.extend(['D2', 'A6', 'A8', 'D8', 'H8'])
+    cells_written.extend(['D2', 'D4', 'D6', 'C8', 'F8', 'H8'])
 
     # Section A: Senior/Key Person (rows 12-19, up to 8 people)
     # P column has formulas =SUM(N+O), so write to N and O only
@@ -314,12 +322,7 @@ def populate_sf424(template_path: str, output_path: str,
     # --- Sheet: Budget 1 C-E ---
     ws_ce = wb['Budget 1 C-E']
 
-    # Header info (mirrors A-B header)
-    ws_ce['D2'] = budget.org_duns
-    ws_ce['D6'] = budget.organization_name
-    ws_ce['C8'] = budget.start_date
-    ws_ce['E8'] = budget.end_date
-    ws_ce['H8'] = budget.budget_period
+    # Header info auto-copies from Budget 1 A-B — do NOT write here
 
     # Section C: Equipment (rows 14-23, up to 10 items)
     for i, (desc, cost) in enumerate(budget.equipment.items[:10]):
@@ -358,12 +361,7 @@ def populate_sf424(template_path: str, output_path: str,
     # --- Sheet: Budget 1 F-K ---
     ws_fk = wb['Budget 1 F-K']
 
-    # Header info
-    ws_fk['D2'] = budget.org_duns
-    ws_fk['D6'] = budget.organization_name
-    ws_fk['C8'] = budget.start_date
-    ws_fk['E8'] = budget.end_date
-    ws_fk['H8'] = budget.budget_period
+    # Header info auto-copies from Budget 1 A-B — do NOT write here
 
     # Section F: Other Direct Costs (data entry cells)
     od = budget.other_direct

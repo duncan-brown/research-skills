@@ -18,11 +18,12 @@ description: Syracuse University OSP Budget Template population for sponsored re
 
 | Field | Value |
 |-------|-------|
-| **Version** | 3.0 |
+| **Version** | 3.1 |
 | **Created** | November 26, 2025 |
 | **Last Updated** | April 8, 2026 |
 
 ### Version History
+- **3.1** (Apr 8, 2026): Fixed 6 issues: (1) OSP budget now writes Other Personnel counts to Column B rows 39-48 on Personnel Yr 1 tab; added B39-B48 to safe cells. (2) SF424 DUNS number (002257350) now written to D2 on Budget 1 A-B only. (3) SF424 project type "X" now written to D4. (4) SF424 organization name written to D6 (plain text, no label prefix). (5) SF424 start date now written to C8 (not A8). (6) SF424 end date now written to F8 (not D8). Removed redundant header writes from C-E and F-K sheets since they auto-copy from A-B.
 - **3.0** (Apr 8, 2026): MAJOR — DOE Genesis Mission support. Added SF424 R&R Budget template and population script for DE-FOA-0003612 Phase I proposals. When a PI requests a Genesis budget, the skill now generates both the SU OSP Budget workbook and the SF424 R&R Budget form from a single set of Python-computed values. Added genesis_solicitation.md reference file with all budget-relevant FOA rules. Added sf424_population.py script with data classes and population functions. All computed values (fringe, MTDC, F&A) are calculated in Python — never by LLM arithmetic.
 - **2.3** (Mar 28, 2026): Added Apache License 2.0. Added LICENSE file and license headers to all Python scripts. Added GitHub repository update workflow documentation.
 - **2.1** (Mar 13, 2026): Updated OSP Budget Template to 1/30/2026 version. NIH salary cap updated to $228,000 (effective January 1, 2026, per NOT-OD-26-034). Removed personally identifying information and research-domain-specific references from examples. All example names replaced with generic placeholders.
