@@ -1,6 +1,6 @@
 ---
 name: su-osp-budget
-description: Syracuse University OSP Budget Template population for sponsored research proposals. Use when PIs need to create, populate, or modify the OSP Budget Workbook (FY26) for federal or non-federal grants. Handles personnel (senior/other), non-personnel costs (equipment, travel, participant support, materials, consultants, subawards, tuition, human subjects), F&A rates, fringe rate lookups, and generates Excel workbooks. Self-contained — includes all rate data, policy references, and calculation functions with no external skill dependencies. Requires Claude Opus 4.5+ and the xlsx skill.
+description: Syracuse University OSP Budget Template population for sponsored research proposals. Use when PIs need to create, populate, or modify the OSP Budget Workbook (FY26) for federal or non-federal grants. Handles personnel (senior/other), non-personnel costs (equipment, travel, participant support, materials, consultants, subawards, tuition, human subjects), F&A rates, fringe rate lookups, and generates Excel workbooks. For DOE Genesis Mission proposals (DE-FOA-0003612), generates BOTH the SU OSP Budget Excel file AND the SF424 R&R Budget form. ALWAYS use this skill when the user mentions Genesis Mission, DOE Genesis, DE-FOA-0003612, SF424 R&R budget, or asks about building a budget for a DOE Genesis proposal. Self-contained — includes all rate data, policy references, calculation functions, and the SF424 R&R template with no external skill dependencies. Requires Claude Opus 4.5+ and the xlsx skill.
 ---
 
 # SU OSP Budget Template Skill
@@ -18,11 +18,12 @@ description: Syracuse University OSP Budget Template population for sponsored re
 
 | Field | Value |
 |-------|-------|
-| **Version** | 2.3 |
+| **Version** | 3.0 |
 | **Created** | November 26, 2025 |
-| **Last Updated** | March 28, 2026 |
+| **Last Updated** | April 8, 2026 |
 
 ### Version History
+- **3.0** (Apr 8, 2026): MAJOR — DOE Genesis Mission support. Added SF424 R&R Budget template and population script for DE-FOA-0003612 Phase I proposals. When a PI requests a Genesis budget, the skill now generates both the SU OSP Budget workbook and the SF424 R&R Budget form from a single set of Python-computed values. Added genesis_solicitation.md reference file with all budget-relevant FOA rules. Added sf424_population.py script with data classes and population functions. All computed values (fringe, MTDC, F&A) are calculated in Python — never by LLM arithmetic.
 - **2.3** (Mar 28, 2026): Added Apache License 2.0. Added LICENSE file and license headers to all Python scripts. Added GitHub repository update workflow documentation.
 - **2.1** (Mar 13, 2026): Updated OSP Budget Template to 1/30/2026 version. NIH salary cap updated to $228,000 (effective January 1, 2026, per NOT-OD-26-034). Removed personally identifying information and research-domain-specific references from examples. All example names replaced with generic placeholders.
 - **2.0** (Feb 9, 2026): MAJOR — Self-contained release. Incorporated all rate data, policy references, calculation scripts, and lookup functions from su-research-budget and su-chart-of-accounts. No external skill dependencies (except xlsx). Added rate_lookup.py and budget_calculator.py to scripts/. Added fringe rate data files, F&A rate history, and all policy reference files to skill. Updated all documentation to reference internal files only.
@@ -123,6 +124,107 @@ ls -d /mnt/skills/public/xlsx 2>/dev/null && echo "✓ xlsx found" || echo "✗ 
 | `xlsx` | `/mnt/skills/public/xlsx` | Excel file creation and manipulation |
 
 **All rate data, policy references, and calculation functions are included within this skill.**
+
+---
+
+## DOE Genesis Mission Workflow (Phase I)
+
+> **When a PI or OSP RA asks for help building a budget for a DOE Genesis proposal (DE-FOA-0003612), follow this workflow to generate BOTH the SU OSP Budget workbook AND the SF424 R&R Budget form.**
+
+### Genesis-Specific Rules
+
+Read `references/genesis_solicitation.md` for complete FOA rules. Key constraints:
+
+- **Phase I only**: Single 9-month budget period, July 1, 2026 – March 31, 2027
+- **Award size**: $500,000 to $750,000
+- **Sponsor type**: "Federal - Other" (DOE)
+- **Duration**: 1 year on the OSP template (only Year 1 populated)
+- **Equipment threshold**: $5,000 (SU NICRA, not the $10,000 in the FOA)
+- **Cost sharing**: Not required for IHEs doing basic/applied research
+- **Cloud computing**: Ask the PI if they have cloud computing costs. Enter in "Other" on OSP Non-personnel tab with justification "ADP/Computer Services". Map to SF424 Section F Line 4.
+- **Tuition**: Remitted tuition only (Row 41 on OSP). Maps to SF424 Section F "Other" (NOT Section E). Excluded from MTDC.
+
+### Workflow Steps
+
+**Step 1: Collect budget info from PI**
+- Standard personnel and non-personnel info
+- Specifically ask about cloud computing costs (for ADP/Computer Services)
+- Confirm which focus area they are applying to
+- Note: DOE/NNSA lab partners are NOT subrecipients
+
+**Step 2: Populate OSP Budget Template (Year 1 only)**
+- Use `budget_population.py` as normal with Genesis rules applied
+- Set sponsor type to `SponsorType.FEDERAL_OTHER`
+- Set start date to "7/1/26", duration to 1
+- Apply all standard SU rate lookups via `rate_lookup.py`
+- Cloud computing costs go in one of the "Other" rows (44-47) on Non-personnel with column T justification noting "ADP/Computer Services"
+
+**Step 3: Compute all values in Python**
+- Use `rate_lookup.py` for fringe rates by account code
+- Compute per-person fringe: academic salary × AY fringe rate + summer salary × summer fringe rate
+- Compute MTDC base using `sf424_population.compute_mtdc_base()`
+- Compute F&A amount using `sf424_population.compute_fa_amount()`
+- **All arithmetic must be performed in Python code — never by LLM**
+
+**Step 4: Populate SF424 R&R template**
+- Use `sf424_population.populate_sf424()` with the Python-computed values
+- Only Budget Period 1 sheets are populated (Phase I = single period)
+- Cumulative sheet mirrors Period 1
+
+**Step 5: Deliver both files to PI**
+- OSP Budget workbook (formulas recalculate when opened in Excel, serving as cross-check)
+- SF424 R&R Budget workbook
+
+### OSP → SF424 Mapping
+
+| SF424 Section | SF424 Field | Source |
+|---|---|---|
+| **A. Senior/Key** | Per-person rows | Personnel Yr 1 rows 7-14, 20-34. Fringe computed per person from salary × rate. |
+| **B. Other Personnel** | Postdocs (row 27) | OSP Other Personnel: Postdoctoral Associates |
+| **B.** | Grad Students (row 28) | OSP Other Personnel: Graduate Assistants |
+| **B.** | Undergrads (row 29) | OSP Other Personnel: Hourly Students |
+| **B.** | Secretarial (row 30) | OSP Other Personnel: Secretarial/Clerical |
+| **B.** | Other (rows 31-36) | OSP Other Personnel: remaining categories |
+| **C. Equipment** | Individual items | Non-personnel rows 7-13 (items ≥$5K) |
+| **D. Travel** | Domestic (J32) | Non-personnel row 19 |
+| **D.** | Foreign (J33) | Non-personnel row 20 |
+| **E. Participant** | If applicable | Non-personnel rows 25-28 |
+| **F. Other Direct** | Materials (J12) | Non-personnel row 34 |
+| **F.** | Publication (J13) | Non-personnel row 35 |
+| **F.** | Consultant (J14) | Non-personnel row 36 |
+| **F.** | ADP/Computer (J15) | Non-personnel "Other" row tagged as ADP/Computer Services |
+| **F.** | Subawards (J16) | Non-personnel row 38 (sum of all subaward direct + indirect) |
+| **F.** | Rental (J17) | Non-personnel row 39 |
+| **F.** | A&R (J18) | Non-personnel row 40 |
+| **F.** | Other: Remitted Tuition | Non-personnel row 41. NOT in Section E. Excluded from MTDC. |
+| **F.** | Other: Human Subjects | Non-personnel row 43 |
+| **F.** | Other: Purchased Services | Non-personnel row 37 |
+| **H. Indirect** | MTDC rate/base/amount | Python-computed: rate from `rate_lookup.py`, base from `compute_mtdc_base()` |
+| **I. Total** | Direct + Indirect | Python-computed sum |
+
+### SF424 R&R Template
+
+The SF424 R&R template is at `assets/sf424-rr-budget-template.xlsx`. This is a 3-year template; for Phase I, only the "Budget 1" sheets and "Cumulative" are populated.
+
+Sheet structure:
+- `Budget 1 A-B` — Senior/Key Person and Other Personnel
+- `Budget 1 C-E` — Equipment, Travel, Participant Support
+- `Budget 1 F-K` — Other Direct, Direct Total, Indirect, Total, Fee, Justification
+- `Cumulative` — Summary (mirrors Period 1 for Phase I)
+
+### SF424 Population Script
+
+```python
+import sys
+sys.path.insert(0, '/path/to/su-osp-budget/scripts')
+
+from sf424_population import (
+    SF424BudgetPeriod, SF424SeniorPerson, SF424OtherPersonnel,
+    SF424Equipment, SF424Travel, SF424ParticipantSupport,
+    SF424OtherDirect, SF424IndirectCosts,
+    populate_sf424, compute_mtdc_base, compute_fa_amount
+)
+```
 
 ---
 
@@ -553,6 +655,14 @@ See `references/tuition_policies.md` for complete policies.
 cp /path/to/su-osp-budget/assets/OSP-Budget-Template-FY-26-Web.xlsx /home/claude/
 ```
 
+### SF424 R&R Budget Template (Required for Genesis)
+
+**`assets/sf424-rr-budget-template.xlsx`** — The SF424 Research & Related Budget template (3-year version). For Genesis Phase I, only Budget Period 1 and Cumulative sheets are populated. Copy to working directory before populating.
+
+```bash
+cp /path/to/su-osp-budget/assets/sf424-rr-budget-template.xlsx /home/claude/
+```
+
 ### Rate Data Files
 
 | File | Content | Update Frequency |
@@ -566,7 +676,8 @@ cp /path/to/su-osp-budget/assets/OSP-Budget-Template-FY-26-Web.xlsx /home/claude
 
 | File | Purpose |
 |------|---------|
-| `scripts/budget_population.py` | Main budget population script (data classes, population functions) |
+| `scripts/budget_population.py` | Main OSP budget population script (data classes, population functions) |
+| `scripts/sf424_population.py` | SF424 R&R Budget population for Genesis proposals (data classes, MTDC/F&A computation, population functions) |
 | `scripts/rate_lookup.py` | F&A and fringe rate lookup functions |
 | `scripts/budget_calculator.py` | Fully loaded cost calculations, NIH cap, course buyout |
 
@@ -590,6 +701,7 @@ cp /path/to/su-osp-budget/assets/OSP-Budget-Template-FY-26-Web.xlsx /home/claude
 - `references/osp_non_personnel_guidance.md` — SU OSP non-personnel guidance
 
 **Policy References:**
+- `references/genesis_solicitation.md` — DOE Genesis Mission (DE-FOA-0003612) budget rules, Phase I parameters, SF424 R&R mapping, team requirements, cost sharing, allowable costs
 - `references/nih_policies.md` — NIH salary cap, NRSA, training grants, graduate student compensation cap
 - `references/nsf_policies.md` — NSF two-month rule, cost sharing prohibition, participant support
 - `references/salary_policies.md` — Appointments, buy-outs, thresholds, stipends, union rates
