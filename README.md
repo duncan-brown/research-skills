@@ -41,14 +41,13 @@ Once the skill is installed in your Claude project, you can ask Claude to build 
 
 > Help me build a DOE Genesis Phase I proposal budget. I'm applying to the quantum information science focus area. My base salary is $120,000 and I want 1 course buyout plus 0.5 summer months. I need one postdoc for 6 months and $15,000 in cloud computing for AI model training.
 
-For DOE Genesis proposals, Claude will generate both the SU OSP Budget workbook and the SF424 R&R Budget form.
-
 **Tips:**
 
 - Claude will verify your budget against sponsor-specific rules (NIH salary cap, NSF two-month limit, etc.) and flag any issues.
 - Always tell Claude which college your grad students are in — tuition remission policies differ by college and significantly affect the budget.
 - You can modify budgets iteratively: "Add a second grad student starting in year 2" or "Remove the foreign travel."
 - If you are unsure about a rate or policy, just ask — the skill includes all current SU fringe rates, F&A rates, and relevant federal sponsor policies.
+- For DOE Genesis proposals, Claude will generate both the SU OSP Budget workbook and the SF424 R&R Budget form.
 
 ## License
 
