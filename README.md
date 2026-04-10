@@ -33,6 +33,12 @@ Populates the Syracuse University OSP Budget Template for sponsored research pro
 
 Once the skill is installed in your Claude project, you can ask Claude to build a budget in plain English. Claude will ask clarifying questions as needed, look up the correct fringe and F&A rates, and generate a populated OSP Budget Template as a downloadable Excel file.
 
+Open an Opus 4.5 or higher chat and tell Claude:
+
+> Load the su-osp-budget skill to help me develop a budget for my proposal.
+
+Then you can interact with Claude using prompts like the examples below.
+
 **Example prompts:**
 
 > I need a 3-year NSF budget starting 9/1/26. I'm the PI with a base salary of $135,000 and I want to buy out one course per year plus 1 month of summer salary. I also need one grad student for the full project and $5,000/year in travel.
