@@ -55,6 +55,57 @@ Then you can interact with Claude using prompts like the examples below.
 - If you are unsure about a rate or policy, just ask — the skill includes all current SU fringe rates, F&A rates, and relevant federal sponsor policies.
 - For DOE Genesis proposals, Claude will generate both the SU OSP Budget workbook and the SF424 R&R Budget form.
 
+## oor-dashboards (v1.1)
+
+[oor-dashboards.skill](dist/oor-dashboards/v1.1)
+
+Analyzes Syracuse University Office of Research data from three DataInsights dashboards. Handles Tableau Excel exports with merged cells, forward-fill logic, and cross-referencing across proposals, awards, and expenditures. Does not include General Ledger (GL) transaction parsing.
+
+**Data sources:**
+
+- [Sponsored Proposals](https://datainsights.syr.edu/#/site/data/views/SponsoredProposalsatSyracuseUniversity/Details) — all proposals (Pending, Not Funded, Funded) from FY2014 onwards
+- [Anticipated & Supplement Amounts](https://datainsights.syr.edu/#/site/data/views/OfficeofResearchAnticipatedandSupplementAmounts/Details) — funded awards with supplement tracking
+- [Detailed Sponsored Expenditures](https://datainsights.syr.edu/#/site/data/views/OfficeofResearchDetailedExpenditures/Details) — expenditures by fiscal year
+
+**Key capabilities:**
+
+- Proposal tracking by status, PI, department, sponsor, and fiscal year
+- Award analysis with base + supplement calculations and active/completed filtering
+- Expenditure analysis with direct/indirect cost breakdowns and burn rate calculations
+- Cross-referencing with faculty-by-unit and Chart of Accounts data
+- Subcontract identification (Primary Sponsor vs Sponsor Name)
+- Federal spending analysis by department and office
+- Monthly expenditure trends and cumulative spending visualization
+
+**Requires:** xlsx skill
+
+### Getting Started
+
+Once the skill is installed in your Claude project, upload Excel exports from the DataInsights dashboards and ask Claude to analyze them.
+
+**Data file naming convention:** `YYYYMMDD_Proposal_Details.xlsx`, `YYYYMMDD_Award_Details.xlsx`, `YYYYMMDD_Expenditure_Details_FYXX.xlsx`
+
+**Example prompts:**
+
+> Load the oor-dashboards skill. I've uploaded Proposal_Details and Award_Details files. Show me a summary of funded proposals by school/college for the current fiscal year.
+
+> What are the top 10 PIs by total active award funding? Include the number of awards and the annual rate for each.
+
+> Show me the monthly expenditure trend for FY25. What is the effective F&A rate and how does spending break down by expense category?
+
+> Which Engineering faculty have pending proposals? What is the total pending amount and who are the sponsors?
+
+> Compare proposed amounts to actual award amounts for funded proposals. How many awards were negotiated down?
+
+> Identify all awards with supplements. Who has the largest total award including supplements?
+
+**Tips:**
+
+- Always upload Proposal Details and Award Details files from the same date for accurate cross-referencing.
+- For funded award analysis, the skill uses Award Details as the authoritative source (PeopleSoft live data).
+- Expenditure data must be downloaded per fiscal year from the Details tab.
+- The skill handles Tableau's merged-cell Excel exports automatically — no manual cleanup needed.
+
 ## License
 
 This project is licensed under the Apache License, Version 2.0. See [LICENSE](su-osp-budget/LICENSE) for details.

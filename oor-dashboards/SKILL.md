@@ -5,14 +5,87 @@ description: Analyze Syracuse University Office of Research data from three Data
 
 # Research Dashboards Analysis
 
-**Version**: 1.0
-**Created**: February 16, 2026
+## Version Information
+
+| Field | Value |
+|-------|-------|
+| **Version** | 1.1 |
+| **Created** | February 16, 2026 |
+| **Last Updated** | April 10, 2026 |
+
+### Version History
+- **1.1** (Apr 10, 2026): Added Apache License 2.0. Added GitHub repository update workflow documentation. Enhanced description with explicit trigger phrases for reliable skill activation. Removed invalid metadata field from YAML frontmatter.
+- **1.0** (Feb 16, 2026): Initial release. Consolidated sponsored-proposals (v1.4) and detailed-expenditures (v1.0) into a single self-contained skill covering three DataInsights dashboards: Sponsored Proposals, Award Details (Anticipated & Supplement Amounts), and Detailed Sponsored Expenditures. Excludes General Ledger parsing.
+
+### Versioning Instructions for Skill Updates
+
+When this skill is updated and rebuilt using the skill-creator:
+1. **Auto-increment the minor version**: 1.1 -> 1.2 -> 1.3 -> 1.4, etc.
+2. **Update "Last Updated" date** to the current date
+3. **Add entry to Version History** with brief description of changes
+4. **Major version updates** (e.g., 1.x -> 2.0) require explicit user instruction
+
+### GitHub Repository Update Workflow
+
+This skill is maintained in the `duncan-brown/research-skills` GitHub repository. When a new version is built, the repository must be updated following this procedure:
+
+**Repository structure:**
+```
+research-skills/
+├── README.md
+├── oor-dashboards/              # Source files (git-tracked with full history)
+│   ├── SKILL.md
+│   ├── LICENSE
+│   ├── references/
+│   └── scripts/
+└── dist/
+    └── oor-dashboards/          # Packaged .skill files by version
+        ├── v1.0/
+        │   └── oor-dashboards.skill
+        ├── v1.1/
+        │   └── oor-dashboards.skill
+        └── v{X.Y}/
+            └── oor-dashboards.skill
+```
+
+**Step 1: Commit source file changes**
+
+Push all modified source files under `oor-dashboards/` to the `main` branch. The commit message should summarize the changes, e.g.:
+```
+v1.1: Brief description of what changed
+```
+
+**Step 2: Package the .skill file**
+
+Use the skill-creator's `package_skill.py` script (or equivalent) to create the `.skill` zip file from the source directory.
+
+**Step 3: Commit the packaged .skill file**
+
+Push the `.skill` file to `dist/oor-dashboards/v{X.Y}/oor-dashboards.skill` with a commit message like:
+```
+added binary package for oor-dashboards.skill v{X.Y}
+```
+
+**Step 4: Tag the release**
+
+Create a lightweight git tag on the source commit (from Step 1, not the dist commit) named:
+```
+oor-dashboards-v{X.Y}
+```
+
+The tag naming convention is `{skill-name}-v{version}` to support multiple skills in the same repository without tag collisions.
+
+**Privacy reminder:** Before committing, verify that no personally identifying information (real names, salaries, or identifying research domain references) has been introduced during development. Run a grep scan across all `.md` and `.py` files.
+
+### License
+
+This skill is licensed under the Apache License, Version 2.0. See the `LICENSE` file in the skill root directory.
+
+---
 
 **CRITICAL**: Read this entire skill file before proceeding with any analysis.
 
 This skill analyzes Syracuse University Office of Research data exported from three DataInsights dashboards. It consolidates the former `sponsored-proposals` (v1.4) and `detailed-expenditures` (v1.0) skills into a single self-contained package.
-
-**Version Update Instructions**: When updating, auto-increment minor version (1.0 -> 1.1). Major updates (2.0) require the skill maintainer's explicit approval.
 
 ## Data Sources
 
